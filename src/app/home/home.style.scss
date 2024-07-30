@@ -1,0 +1,60 @@
+$primary-color: #0f0f0f;
+$secondary-color: #1c1c1c;
+$accent-color: #0dcaf0;
+$text-color: #ffffff;
+$hover-color: #e0e0e0;
+
+body {
+  margin: 0;
+  font-family: "Arial", sans-serif;
+  background: linear-gradient(135deg, #1f1f1f, #272727);
+  color: $text-color;
+}
+
+.container {
+  width: 100%;
+  text-align: center;
+  padding: 20px;
+}
+
+.navbar {
+  background: $primary-color;
+  padding: 10px 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.nav-tabs {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.nav-tab {
+  margin: 0 15px;
+}
+
+.tab-link {
+  text-decoration: none;
+  color: $text-color;
+  font-weight: bold;
+  transition: color 0.3s ease;
+  padding: 10px 20px;
+  border-radius: 4px;
+  &:hover {
+    color: $hover-color;
+    background-color: $accent-color;
+  }
+}
+
+.content {
+  margin-top: 50px;
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+  p {
+    font-size: 1.2rem;
+  }
+}
