@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { Auth } from '@angular/fire/auth';
 import { MatTab, MatTabChangeEvent, MatTabGroup } from '@angular/material/tabs';
 
 @Component({
