@@ -16,41 +16,37 @@ import { AuthService } from '../auth/auth.service';
     FormsModule,
     CommonModule,
   ],
-  styleUrls: [],
+  styleUrls: ['login.component.scss'],
   template: `
     <div class="login-container">
-      <h2>Login</h2>
-      <form #loginForm="ngForm">
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Email</mat-label>
-          <input
-            matInput
-            type="email"
-            [(ngModel)]="email"
-            name="email"
-            required
-          />
-        </mat-form-field>
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Password</mat-label>
-          <input
-            matInput
-            type="password"
-            [(ngModel)]="password"
-            name="password"
-            required
-          />
-        </mat-form-field>
-        <button
-          mat-raised-button
-          color="primary"
-          type="submit"
-          (click)="login()"
-          [disabled]="!loginForm.form.valid"
-        >
-          Login
-        </button>
-      </form>
+      <div class="login-box">
+        <h2>Login</h2>
+        <form (ngSubmit)="login()">
+          <div class="input-group">
+            <label for="username">Username</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              [(ngModel)]="email"
+              required
+            />
+          </div>
+
+          <div class="input-group">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              [(ngModel)]="password"
+              required
+            />
+          </div>
+
+          <button type="submit" class="login-button">Login</button>
+        </form>
+      </div>
     </div>
   `,
 })

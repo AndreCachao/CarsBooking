@@ -1,0 +1,82 @@
+// Variables
+$primary-color: #000000;
+$secondary-color: #0c7f9c;
+$text-color: #333;
+$background-color: #ffffff;
+$input-border-color: #ccc;
+$box-shadow-color: rgba(0, 0, 0, 0.3);
+
+// Mixin for Flex Centering
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// Container for the Login Page
+.login-container {
+  @include flex-center;
+  height: 100vh;
+  background: linear-gradient(to right, $primary-color, $secondary-color);
+  font-family: "Arial", sans-serif;
+}
+
+// Box containing the Login Form
+.login-box {
+  background: $background-color;
+  padding: 40px;
+  width: 300px;
+  box-shadow: 0px 0px 15px $box-shadow-color;
+  border-radius: 8px;
+
+  h2 {
+    margin: 0 0 20px;
+    text-align: center;
+    color: $text-color;
+  }
+
+  form {
+    .input-group {
+      margin-bottom: 15px;
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+        color: $text-color;
+      }
+
+      input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid $input-border-color;
+        border-radius: 4px;
+        font-size: 14px;
+
+        &:focus {
+          border-color: $primary-color;
+          outline: none;
+        }
+      }
+    }
+
+    .login-button {
+      width: 100%;
+      padding: 10px;
+      background: $primary-color;
+      border: none;
+      border-radius: 4px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+
+      &:hover {
+        background: $secondary-color;
+      }
+
+      &:active {
+        background: $primary-color;
+      }
+    }
+  }
+}
