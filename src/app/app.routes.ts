@@ -4,29 +4,14 @@ import { loggedinGuard } from './loggedin.guard';
 
 export const routes: Routes = [
   {
-    path: 'home',
-    loadComponent: () =>
-      import('./home/home.component').then((m) => m.HomeComponent),
-    canActivate: [authGuard],
+    path: '',
+    redirectTo: '/menu',
+    pathMatch: 'full',
   },
   {
-    path: 'bookcar',
+    path: 'menu',
     loadComponent: () =>
-      import('./bookcar/bookcar.component').then((m) => m.BookCarComponent),
-    canActivate: [authGuard],
-  },
-  {
-    path: 'mybookings',
-    loadComponent: () =>
-      import('./mybookings/mybookings.component').then(
-        (m) => m.MyBookingsComponent
-      ),
-    canActivate: [authGuard],
-  },
-  {
-    path: 'contacts',
-    loadComponent: () =>
-      import('./contacts/contacts.component').then((m) => m.ContactsComponent),
+      import('./menu/menu.component').then((m) => m.MenuComponent),
     canActivate: [authGuard],
   },
   {
@@ -34,8 +19,8 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./register/register.component').then((m) => m.RegisterComponent),
     canActivate: [loggedinGuard],
-  },.
-  
+  },
+
   {
     path: 'login',
     loadComponent: () =>

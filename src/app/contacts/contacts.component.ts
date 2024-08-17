@@ -9,10 +9,10 @@ import { MatTab, MatTabChangeEvent, MatTabGroup } from '@angular/material/tabs';
   template: `
     <div class="container">
       <div class="content">
-        <h1>Welcome to Car Booking Service</h1>
-        <p>Use the tabs to navigate through the sections.</p>
+        <h1>Contacts</h1>
+        <p>Email: andre.cachaogmail.com</p>
+        <p>Phone: 92*******</p>
       </div>
-      ewaea
     </div>
   `,
 })

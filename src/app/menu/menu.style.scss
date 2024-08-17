@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+mini-profile {
+  width: 250px; /* You can adjust the width as needed */
+  height: 100%;
+  border-right: 1px solid #ccc; /* Optional: Adds a divider between the profile and the tabs */
+}
+
+mat-tab-group {
+  flex-grow: 1; /* Ensures the tab group takes up the remaining space */
+  height: 100%;
+}

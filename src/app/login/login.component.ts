@@ -23,11 +23,11 @@ import { AuthService } from '../auth/auth.service';
         <h2>Login</h2>
         <form (ngSubmit)="login()">
           <div class="input-group">
-            <label for="username">Username</label>
+            <label for="username">Email</label>
             <input
               type="text"
-              id="username"
-              name="username"
+              id="email"
+              name="email"
               [(ngModel)]="email"
               required
             />
