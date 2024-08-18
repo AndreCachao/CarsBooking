@@ -1,3 +1,4 @@
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Injectable } from '@angular/core';
 import 'firebase/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
@@ -7,7 +8,11 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private fireAuth: AngularFireAuth, private router: Router) {}
+  constructor(
+    private fireAuth: AngularFireAuth,
+    private router: Router,
+    private firestore: AngularFirestore
+  ) {}
 
   login(email: string, password: string) {
     this.fireAuth.signInWithEmailAndPassword(email, password).then(
@@ -22,10 +27,11 @@ export class AuthService {
     );
   }
 
-  register(email: string, password: string) {
+  register(username: string, email: string, password: string) {
     this.fireAuth.createUserWithEmailAndPassword(email, password).then(
       () => {
         alert('Registration Successful');
+        this.addUserToFirestore(username, email);
         this.router.navigate(['/login']);
       },
       (err) => {
@@ -45,5 +51,23 @@ export class AuthService {
         alert('Something went wrong');
       }
     );
+  }
+
+  private addUserToFirestore(username: string, email: string) {
+    if (email) {
+      const userRef = this.firestore.collection('users').doc(email);
+      userRef
+        .set({
+          email: email,
+          username: username,
+          userLevel: 20,
+        })
+        .then(() => {
+          console.log('User data added to Firestore');
+        })
+        .catch((error) => {
+          console.error('Error adding user data to Firestore:', error);
+        });
+    }
   }
 }

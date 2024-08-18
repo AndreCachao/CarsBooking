@@ -79,4 +79,14 @@ $box-shadow-color: rgba(0, 0, 0, 0.3);
       }
     }
   }
+
+  .clickable-text {
+    color: rgb(0, 183, 255);
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  .clickable-text:hover {
+    color: darkblue;
+  }
 }

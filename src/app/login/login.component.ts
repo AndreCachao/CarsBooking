@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'login',
@@ -45,6 +46,11 @@ import { AuthService } from '../auth/auth.service';
           </div>
 
           <button type="submit" class="login-button">Login</button>
+          <div style="margin-top: 10px;">
+            <span (click)="redirectToRegisterPage()" class="clickable-text"
+              >Don't have an account? Create one!</span
+            >
+          </div>
         </form>
       </div>
     </div>
@@ -54,7 +60,7 @@ export class LoginComponent {
   email: string = '';
   password: string = '';
 
-  constructor(private auth: AuthService) {}
+  constructor(private auth: AuthService, private router: Router) {}
 
   ngOnInit(): void {}
 
@@ -73,5 +79,9 @@ export class LoginComponent {
 
     this.email = '';
     this.password = '';
+  }
+
+  redirectToRegisterPage() {
+    this.router.navigate(['/register']);
   }
 }

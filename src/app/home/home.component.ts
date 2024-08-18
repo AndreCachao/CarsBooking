@@ -14,7 +14,6 @@ import { MiniProfileComponent } from './miniprofile.component';
         <h1>Welcome to Car Booking Service</h1>
         <p>Use the tabs to navigate through the sections.</p>
       </div>
-  
     </div>
   `,
 })

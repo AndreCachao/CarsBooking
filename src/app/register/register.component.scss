@@ -18,7 +18,7 @@ $box-shadow-color: rgba(0, 0, 0, 0.3);
   @include flex-center;
   height: 100vh;
   background: linear-gradient(to right, $primary-color, $secondary-color);
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
 }
 
 // Box containing the Register Form
@@ -78,5 +78,14 @@ $box-shadow-color: rgba(0, 0, 0, 0.3);
         background: $primary-color;
       }
     }
+  }
+  .clickable-text {
+    color: rgb(0, 183, 255);
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  .clickable-text:hover {
+    color: darkblue;
   }
 }

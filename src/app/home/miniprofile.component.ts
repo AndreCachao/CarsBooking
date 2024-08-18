@@ -1,8 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
-import { min } from 'rxjs';
+import { UserService } from '../UserService/user.service';
 
 @Component({
   selector: 'mini-profile',
@@ -11,30 +10,37 @@ import { min } from 'rxjs';
   styleUrls: ['miniprofile.style.scss'],
   template: `
     <div class="container">
-      {{ userName }}
-      <div class="logout-button">
-        <button (click)="logout()" style="height: 30px; width: 60px;">
-          Logout
-        </button>
+      <div class="content">
+        <img
+          src="https://images.unsplash.com/photo-1484807352052-23338990c6c6?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          alt=""
+          style="height: 40px; width: 40px;"
+        />
+
+        <div class="username">
+          {{ userName }}
+        </div>
+        <div class="logout-button">
+          <button (click)="logout()" style="height: 30px; width: 60px;">
+            Logout
+          </button>
+        </div>
       </div>
     </div>
   `,
 })
 export class MiniProfileComponent {
-  userName: string | null = null;
+  @Input() userData: any;
 
+  userName: string | null = null;
   constructor(
-    private afAuth: AngularFireAuth,
     private auth: Auth,
-    private router: Router
+    private router: Router,
+    public userService: UserService
   ) {}
 
-  ngOnInit(): void {
-    this.afAuth.authState.subscribe((user) => {
-      if (user) {
-        this.userName = user.email; // Access the user's display name
-      }
-    });
+  ngOnChanges(changes: SimpleChanges): void {
+    this.userName = this.userData.username;
   }
 
   logout() {

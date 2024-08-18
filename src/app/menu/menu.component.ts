@@ -1,10 +1,13 @@
+import { UserService } from './../UserService/user.service';
 import { Component } from '@angular/core';
-import { MatTab, MatTabChangeEvent, MatTabGroup } from '@angular/material/tabs';
+import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { HomeComponent } from '../home/home.component';
 import { BookCarComponent } from '../bookcar/bookcar.component';
 import { MyBookingsComponent } from '../mybookings/mybookings.component';
 import { ContactsComponent } from '../contacts/contacts.component';
 import { MiniProfileComponent } from '../home/miniprofile.component';
+import { Observable } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-menu',
@@ -18,10 +21,11 @@ import { MiniProfileComponent } from '../home/miniprofile.component';
     MyBookingsComponent,
     ContactsComponent,
     MiniProfileComponent,
+    AsyncPipe,
   ],
   template: `
     <div class="container">
-      <mini-profile></mini-profile>
+      <mini-profile [userData]="userData$ | async"></mini-profile>
       <mat-tab-group>
         <mat-tab label="Home">
           <home></home>
@@ -40,7 +44,11 @@ import { MiniProfileComponent } from '../home/miniprofile.component';
   `,
 })
 export class MenuComponent {
-  constructor() {
-    // Initialization logic can go here
+  userData$: Observable<any> | undefined;
+
+  constructor(private userService: UserService) {} // Inject the UserService
+
+  ngOnInit(): void {
+    this.userData$ = this.userService.getUserData();
   }
 }
