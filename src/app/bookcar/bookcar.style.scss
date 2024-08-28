@@ -1,0 +1,42 @@
+.container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.table-heading {
+  display: flex;
+  width: 80%;
+  margin-top: 20px;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.collumn {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  border: 3px solid black;
+}
+
+.values {
+  display: flex;
+  height: 40px;
+  width: 80%;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid gray;
+  border-right: 1px solid gray;
+  border-left: 1px solid gray;
+
+  &:hover {
+    background-color: rgb(157, 221, 221);
+    cursor: pointer;
+  }
+}
+
+.value {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}

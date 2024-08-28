@@ -1,7 +1,7 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { UserService } from '../UserService/user.service';
+import { AppUser, UserService } from '../UserService/user.service';
 
 @Component({
   selector: 'mini-profile',
@@ -30,14 +30,15 @@ import { UserService } from '../UserService/user.service';
   `,
 })
 export class MiniProfileComponent {
-  @Input() userData: any;
+  @Input() userData: AppUser;
 
-  userName: string | null = null;
   constructor(
     private auth: Auth,
     private router: Router,
     public userService: UserService
   ) {}
+
+  userName: string;
 
   ngOnChanges(changes: SimpleChanges): void {
     this.userName = this.userData.username;

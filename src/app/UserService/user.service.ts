@@ -5,15 +5,14 @@ import { Observable, of, switchMap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
+  userData$: Observable<AppUser>;
+
   constructor(
     private afAuth: AngularFireAuth,
     private firestore: AngularFirestore
-  ) {}
-
-  getUserData(): Observable<any> {
-    return this.afAuth.authState.pipe(
+  ) {
+    this.userData$ = this.afAuth.authState.pipe(
       switchMap((user) => {
-      
         if (user && user.email) {
           return this.firestore
             .collection('users')
@@ -22,7 +21,7 @@ export class UserService {
             .pipe(
               switchMap((doc) => {
                 if (doc.exists) {
-                  return of(doc.data());
+                  return of(doc.data() as AppUser);
                 } else {
                   console.error('No such document!');
                   return of(null);
@@ -35,4 +34,10 @@ export class UserService {
       })
     );
   }
+}
+
+export interface AppUser {
+  username: string;
+  email: string;
+  userlevel: number;
 }

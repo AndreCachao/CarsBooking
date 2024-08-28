@@ -1,4 +1,4 @@
-import { UserService } from './../UserService/user.service';
+import { AppUser, UserService } from './../UserService/user.service';
 import { Component } from '@angular/core';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { HomeComponent } from '../home/home.component';
@@ -44,11 +44,11 @@ import { AsyncPipe } from '@angular/common';
   `,
 })
 export class MenuComponent {
-  userData$: Observable<any> | undefined;
+  userData$: Observable<AppUser>;
 
-  constructor(private userService: UserService) {} // Inject the UserService
-
-  ngOnInit(): void {
-    this.userData$ = this.userService.getUserData();
+  constructor(private userService: UserService) {
+    this.userData$ = this.userService.userData$;
   }
+
+  ngOnInit(): void {}
 }
