@@ -9,22 +9,18 @@ import { AppUser, UserService } from '../UserService/user.service';
   imports: [],
   styleUrls: ['miniprofile.style.scss'],
   template: `
-    <div class="container">
-      <div class="content">
-        <img
-          src="https://images.unsplash.com/photo-1484807352052-23338990c6c6?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          alt=""
-          style="height: 40px; width: 40px;"
-        />
+    <div class="profile-container">
+      <img
+        class="profile-picture"
+        src="https://images.unsplash.com/photo-1484807352052-23338990c6c6?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        alt="Profile Picture"
+      />
 
+      <div class="profile-info">
         <div class="username">
           {{ userName }}
         </div>
-        <div class="logout-button">
-          <button (click)="logout()" style="height: 30px; width: 60px;">
-            Logout
-          </button>
-        </div>
+        <button class="logout-button" (click)="logout()">Logout</button>
       </div>
     </div>
   `,
@@ -41,7 +37,9 @@ export class MiniProfileComponent {
   userName: string;
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.userName = this.userData.username;
+    if (changes['userData']) {
+      this.userName = this.userData?.username || 'Guest';
+    }
   }
 
   logout() {

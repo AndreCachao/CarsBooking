@@ -17,11 +17,11 @@ export class UserService {
           return this.firestore
             .collection('users')
             .doc(user.email)
-            .get()
+            .valueChanges() // Listen for real-time updates
             .pipe(
-              switchMap((doc) => {
-                if (doc.exists) {
-                  return of(doc.data() as AppUser);
+              switchMap((data) => {
+                if (data) {
+                  return of(data as AppUser);
                 } else {
                   console.error('No such document!');
                   return of(null);
@@ -39,5 +39,5 @@ export class UserService {
 export interface AppUser {
   username: string;
   email: string;
-  userlevel: number;
+  userLevel: number;
 }

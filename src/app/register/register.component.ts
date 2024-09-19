@@ -71,7 +71,7 @@ import { Router } from '@angular/router';
 
           <div style="margin-top: 10px;">
             <span (click)="redirectToLoginPage()" class="clickable-text"
-              >Don't have an account? Create one!</span
+              >Already have an account? Log in!</span
             >
           </div>
         </form>
