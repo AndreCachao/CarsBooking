@@ -56,26 +56,32 @@ import { MatSelectModule } from '@angular/material/select';
 
           <div class="form-group">
             <label for="color">Color</label>
-            <input
-              id="color"
-              type="text"
-              [(ngModel)]="userCar.color"
-              name="color"
-              placeholder="Enter car color"
-              required
-            />
+            <mat-form-field appearance="outline">
+              <input
+                matInput
+                id="color"
+                type="text"
+                [(ngModel)]="userCar.color"
+                name="color"
+                placeholder="Enter car color"
+                required
+              />
+            </mat-form-field>
           </div>
 
           <div class="form-group">
             <label for="price">Price</label>
-            <input
-              id="price"
-              type="number"
-              [(ngModel)]="userCar.price"
-              name="price"
-              placeholder="Enter car price"
-              required
-            />
+            <mat-form-field appearance="outline">
+              <input
+                matInput
+                id="price"
+                type="number"
+                [(ngModel)]="userCar.price"
+                name="price"
+                placeholder="Enter car price"
+                required
+              />
+            </mat-form-field>
           </div>
 
           <button class="submit-button" type="submit">Create</button>

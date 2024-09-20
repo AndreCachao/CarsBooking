@@ -13,35 +13,16 @@ import { CarCardComponent } from '../carcard/carcard.component';
   styleUrls: ['bookcar.style.scss'],
   template: `
     <div class="container">
-      <!-- <div class="row table-heading">
-        <div class="collumn" *ngFor="let header of headers">{{ header }}</div>
-      </div> -->
       <div
-        class="values"
+        class="listCards"
         (click)="selectCar(car)"
         *ngFor="let car of cars$ | async"
       >
-        <!-- <div class="value">
-          {{ car.model }}
-        </div>
-        <div class="value">
-          {{ car.year }}
-        </div>
-        <div class="value">
-          {{ car.color }}
-        </div>
-        <div class="value">
-          {{ car.price }}
-        </div>
-        <div class="remove-button" *ngIf="selectedCar === car">
-          <button (click)="removeCar(car)">Remove</button>
-        </div> -->
         <cardcard [car]="car"></cardcard>
       </div>
-
-      <div class="footer">
-        <p>&copy; 2024 Car Booking Service. All rights reserved.</p>
-      </div>
+    </div>
+    <div class="footer">
+      <p>&copy; 2024 Car Booking Service. All rights reserved.</p>
     </div>
   `,
 })

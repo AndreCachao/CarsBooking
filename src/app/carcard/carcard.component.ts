@@ -8,9 +8,13 @@ import { Car } from '../createbooking/createbooking.component';
   imports: [CommonModule],
   styleUrls: ['carcard.style.scss'],
   template: `
-    aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
     <div class="container">
-      <div>{{ car.model }}</div>
+      <div class="card">
+        <div class="carmodel">{{ car.model }}</div>
+        <div>Year: {{ car.year }}</div>
+        <div>Color: {{ car.color }}</div>
+        <div>Price: {{ car.price }}€</div>
+      </div>
     </div>
   `,
 })
