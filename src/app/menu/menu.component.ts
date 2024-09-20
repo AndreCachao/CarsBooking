@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { HomeComponent } from '../home/home.component';
 import { BookCarComponent } from '../bookcar/bookcar.component';
-import { MyBookingsComponent } from '../mybookings/mybookings.component';
+import { CreateBookingComponent } from '../createbooking/createbooking.component';
 import { ContactsComponent } from '../contacts/contacts.component';
 import { MiniProfileComponent } from '../home/miniprofile.component';
 import { Observable } from 'rxjs';
@@ -18,23 +18,22 @@ import { AsyncPipe } from '@angular/common';
     MatTabGroup,
     HomeComponent,
     BookCarComponent,
-    MyBookingsComponent,
+    CreateBookingComponent,
     ContactsComponent,
     MiniProfileComponent,
     AsyncPipe,
   ],
   template: `
     <div class="container">
-      <mini-profile [userData]="userData$ | async"></mini-profile>
       <mat-tab-group>
         <mat-tab label="Home">
           <home></home>
         </mat-tab>
         <mat-tab label="Book a Car">
-          <bookcar></bookcar>
+          <bookcar [userData]="userData$ | async"></bookcar>
         </mat-tab>
         <mat-tab label="My Books">
-          <mybookings></mybookings>
+          <createbooking></createbooking>
         </mat-tab>
         <mat-tab label="Contacts">
           <contacts></contacts>

@@ -27,4 +27,12 @@ export const routes: Routes = [
       import('./login/login.component').then((m) => m.LoginComponent),
     canActivate: [loggedinGuard],
   },
+  {
+    path: 'createbooking',
+    loadComponent: () =>
+      import('./createbooking/createbooking.component').then(
+        (m) => m.CreateBookingComponent
+      ),
+    canActivate: [authGuard],
+  },
 ];
