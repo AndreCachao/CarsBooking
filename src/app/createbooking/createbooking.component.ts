@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { Router } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'createbooking',
@@ -13,79 +15,88 @@ import { MatSelectModule } from '@angular/material/select';
     FormsModule,
     MatSelectModule,
     MatFormFieldModule,
-    CommonModule,
     MatInputModule,
+    MatIconModule,
+    MatInputModule,
+    CommonModule,
   ],
   styleUrls: ['createbooking.style.scss'],
   template: `
     <div class="container">
-      <div class="form-container">
-        <h2 class="form-title">Add a New Car</h2>
-        <form (ngSubmit)="createCar()" #carForm="ngForm">
-          <div class="form-group">
-            <label for="model">Model</label>
-            <mat-form-field appearance="outline">
-              <mat-select
-                id="model"
-                [(ngModel)]="userCar.model"
-                name="model"
-                placeholder="Select car model"
-                required
-              >
-                <mat-option *ngFor="let brand of carBrands" [value]="brand">{{
-                  brand
-                }}</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
+      <div class="upper-container">
+        <button (click)="navigateTo('menu')" class="home-button" mat-button>
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+      </div>
+      <div class="bellow-container">
+        <div class="form-container">
+          <h2 class="form-title">Add a New Car</h2>
+          <form (ngSubmit)="createCar()" #carForm="ngForm">
+            <div class="form-group">
+              <label for="model">Model</label>
+              <mat-form-field appearance="outline">
+                <mat-select
+                  id="model"
+                  [(ngModel)]="userCar.model"
+                  name="model"
+                  placeholder="Select car model"
+                  required
+                >
+                  <mat-option *ngFor="let brand of carBrands" [value]="brand">{{
+                    brand
+                  }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
 
-          <div class="form-group">
-            <label for="year">Year</label>
-            <mat-form-field appearance="outline">
-              <input
-                matInput
-                id="year"
-                type="number"
-                [(ngModel)]="userCar.year"
-                name="year"
-                placeholder="Enter manufacturing year"
-                required
-              />
-            </mat-form-field>
-          </div>
+            <div class="form-group">
+              <label for="year">Year</label>
+              <mat-form-field appearance="outline">
+                <input
+                  matInput
+                  id="year"
+                  type="number"
+                  [(ngModel)]="userCar.year"
+                  name="year"
+                  placeholder="Enter manufacturing year"
+                  required
+                />
+              </mat-form-field>
+            </div>
 
-          <div class="form-group">
-            <label for="color">Color</label>
-            <mat-form-field appearance="outline">
-              <input
-                matInput
-                id="color"
-                type="text"
-                [(ngModel)]="userCar.color"
-                name="color"
-                placeholder="Enter car color"
-                required
-              />
-            </mat-form-field>
-          </div>
+            <div class="form-group">
+              <label for="color">Color</label>
+              <mat-form-field appearance="outline">
+                <input
+                  matInput
+                  id="color"
+                  type="text"
+                  [(ngModel)]="userCar.color"
+                  name="color"
+                  placeholder="Enter car color"
+                  required
+                />
+              </mat-form-field>
+            </div>
 
-          <div class="form-group">
-            <label for="price">Price</label>
-            <mat-form-field appearance="outline">
-              <input
-                matInput
-                id="price"
-                type="number"
-                [(ngModel)]="userCar.price"
-                name="price"
-                placeholder="Enter car price"
-                required
-              />
-            </mat-form-field>
-          </div>
+            <div class="form-group">
+              <label for="price">Price</label>
+              <mat-form-field appearance="outline">
+                <input
+                  matInput
+                  id="price"
+                  type="number"
+                  [(ngModel)]="userCar.price"
+                  name="price"
+                  placeholder="Enter car price"
+                  required
+                />
+              </mat-form-field>
+            </div>
 
-          <button class="submit-button" type="submit">Create</button>
-        </form>
+            <button class="submit-button" type="submit">Create</button>
+          </form>
+        </div>
       </div>
     </div>
   `,
@@ -155,7 +166,7 @@ export class CreateBookingComponent {
     };
   }
 
-  constructor(private firestore: AngularFirestore) {}
+  constructor(private firestore: AngularFirestore, private router: Router) {}
 
   createCar(): void {
     if (
@@ -181,6 +192,10 @@ export class CreateBookingComponent {
       color: this.userCar.color,
       price: this.userCar.price,
     });
+  }
+
+  navigateTo(section: string) {
+    this.router.navigate([section]);
   }
 }
 

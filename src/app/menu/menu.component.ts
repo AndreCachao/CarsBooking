@@ -1,3 +1,4 @@
+import { MyBookingsComponent } from './../mybookings/mybookings.component';
 import { AppUser, UserService } from './../UserService/user.service';
 import { Component } from '@angular/core';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
@@ -22,6 +23,7 @@ import { AsyncPipe } from '@angular/common';
     ContactsComponent,
     MiniProfileComponent,
     AsyncPipe,
+    MyBookingsComponent,
   ],
   template: `
     <div class="container">
@@ -33,7 +35,7 @@ import { AsyncPipe } from '@angular/common';
           <bookcar [userData]="userData$ | async"></bookcar>
         </mat-tab>
         <mat-tab label="My Books">
-          <createbooking></createbooking>
+          <mybookingscomponent></mybookingscomponent>
         </mat-tab>
         <mat-tab label="Contacts">
           <contacts></contacts>

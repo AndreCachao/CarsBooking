@@ -8,7 +8,7 @@ import { MiniProfileComponent } from '../home/miniprofile.component';
 import { AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-menu',
+  selector: 'mybookingscomponent',
   styleUrls: ['mybookings.style.scss'],
   standalone: true,
   imports: [
