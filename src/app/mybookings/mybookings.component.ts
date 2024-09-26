@@ -31,11 +31,9 @@ import { CarCardComponent } from '../carcard/carcard.component';
   ],
   template: `
     <div class="container">
+      <h2>Your Cars</h2>
       <div class="listCards" *ngFor="let car of cars">
         <cardcard [car]="car" [userData]="userData"></cardcard>
-      </div>
-      <div class="footer">
-        <p>&copy; 2024 Car Booking Service. All rights reserved.</p>
       </div>
     </div>
   `,
@@ -43,12 +41,8 @@ import { CarCardComponent } from '../carcard/carcard.component';
 export class MyBookingsComponent {
   @Input() userData: AppUser;
   cars: Car[] = [];
-  headers: string[] = ['Model', 'Year', 'Color', 'Price'];
-  selectedCar: Car = null;
 
   constructor(private firestore: AngularFirestore) {}
-
-  ngOnInit() {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['userData']) {
@@ -65,18 +59,5 @@ export class MyBookingsComponent {
         });
       }
     }
-  }
-
-  removeCar(car: Car): void {
-    // Implement the logic to remove the car from the database
-    this.firestore
-      .collection<Car>('cars')
-      .doc(car.id)
-      .delete()
-      .then(() => {
-        console.log(`${car.model} removed successfully`);
-        // Reset the selected car after removal
-        this.selectedCar = null;
-      });
   }
 }

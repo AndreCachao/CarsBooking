@@ -54,35 +54,39 @@ import { Observable, take } from 'rxjs';
             <div class="form-group">
               <label for="year">Year</label>
               <mat-form-field appearance="outline">
-                <input
-                  matInput
+                <mat-select
                   id="year"
-                  type="number"
                   [(ngModel)]="createdCar.year"
                   name="year"
                   placeholder="Enter manufacturing year"
                   required
-                />
+                >
+                  <mat-option *ngFor="let year of years" [value]="year">{{
+                    year
+                  }}</mat-option>
+                </mat-select>
               </mat-form-field>
             </div>
 
             <div class="form-group">
               <label for="color">Color</label>
               <mat-form-field appearance="outline">
-                <input
-                  matInput
-                  id="color"
-                  type="text"
-                  [(ngModel)]="createdCar.color"
-                  name="color"
-                  placeholder="Enter car color"
+                <mat-select
+                  id="price"
+                  [(ngModel)]="createdCar.price"
+                  name="price"
+                  placeholder="Enter car price"
                   required
-                />
+                >
+                  <mat-option *ngFor="let color of carColors" [value]="color">{{
+                    color.name
+                  }}</mat-option>
+                </mat-select>
               </mat-form-field>
             </div>
 
             <div class="form-group">
-              <label for="price">Price</label>
+              <label for="price">Price per day</label>
               <mat-form-field appearance="outline">
                 <input
                   matInput
@@ -157,6 +161,45 @@ export class CreateBookingComponent {
     'Lotus',
     'McLaren',
     'Bugatti',
+  ];
+
+  years = [
+    2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015, 2014, 2013,
+    2012, 2011, 2010, 2009, 2008, 2007, 2006, 2005, 2004, 2003, 2002, 2001,
+    2000, 1999,
+  ];
+
+  carColors = [
+    { name: 'Red', color: '#FF0000' },
+    { name: 'Green', color: '#00FF00' },
+    { name: 'Blue', color: '#0000FF' },
+    { name: 'Yellow', color: '#FFFF00' },
+    { name: 'Purple', color: '#800080' },
+    { name: 'Orange', color: '#FFA500' },
+    { name: 'Pink', color: '#FFC0CB' },
+    { name: 'Black', color: '#000000' },
+    { name: 'White', color: '#FFFFFF' },
+    { name: 'Gray', color: '#808080' },
+    { name: 'Cyan', color: '#00FFFF' },
+    { name: 'Magenta', color: '#FF00FF' },
+    { name: 'Brown', color: '#A52A2A' },
+    { name: 'Lime', color: '#00FF00' },
+    { name: 'Maroon', color: '#800000' },
+    { name: 'Olive', color: '#808000' },
+    { name: 'Navy', color: '#000080' },
+    { name: 'Teal', color: '#008080' },
+    { name: 'Coral', color: '#FF7F50' },
+    { name: 'Turquoise', color: '#40E0D0' },
+    { name: 'Violet', color: '#EE82EE' },
+    { name: 'Indigo', color: '#4B0082' },
+    { name: 'Gold', color: '#FFD700' },
+    { name: 'Silver', color: '#C0C0C0' },
+    { name: 'Beige', color: '#F5F5DC' },
+    { name: 'Lavender', color: '#E6E6FA' },
+    { name: 'Crimson', color: '#DC143C' },
+    { name: 'Mint', color: '#98FF98' },
+    { name: 'Rose', color: '#FF007F' },
+    { name: 'Peach', color: '#FFE5B4' },
   ];
 
   ngOnInit(): void {

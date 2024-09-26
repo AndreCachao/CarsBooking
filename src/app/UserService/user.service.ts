@@ -35,6 +35,28 @@ export class UserService {
       })
     );
   }
+
+  public deleteCar(car: Car, user: AppUser): void {
+    // Implement the logic to remove the car from the database
+    this.firestore
+      .collection<Car>('cars')
+      .doc(car.id)
+      .delete()
+      .then(() => {
+        console.log(`${car.model} removed successfully`);
+      });
+
+    // Implement the logic to remove the car from the user's list of cars
+    this.firestore
+      .collection('users')
+      .doc(user.email)
+      .update({
+        carsIds: user.carsIds.filter((id) => id !== car.id),
+      })
+      .then((id) => {
+        console.log(`${id} removed from user's list of cars`);
+      });
+  }
 }
 
 export interface AppUser {

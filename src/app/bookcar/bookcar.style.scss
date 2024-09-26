@@ -87,3 +87,16 @@
   font-size: 14px;
   color: white;
 }
+
+h2 {
+  font-size: 2.5rem; /* Larger font size for emphasis */
+  color: #333; /* Dark gray color for good contrast */
+  text-align: center; /* Center-align the heading */
+  margin-bottom: 1.5rem; /* Space below the heading */
+  font-weight: 700; /* Bold font for strong emphasis */
+  text-transform: uppercase; /* Convert text to uppercase */
+  letter-spacing: 0.05em; /* Slight spacing between letters */
+  border-bottom: 2px solid #007bff; /* Add a border below the heading */
+  padding-bottom: 0.5rem; /* Padding below the text for spacing */
+  margin-top: 10px;
+}

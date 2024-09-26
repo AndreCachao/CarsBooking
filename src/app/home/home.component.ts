@@ -26,7 +26,7 @@ import { AsyncPipe } from '@angular/common';
 
         <div class="button-group">
           <button class="primary-btn" (click)="navigateTo('createbooking')">
-            Create Booking
+            Register your Car
           </button>
           <button class="secondary-btn" (click)="navigateTo('profile')">
             Profile
