@@ -35,7 +35,9 @@ import { AsyncPipe } from '@angular/common';
           <bookcar [userData]="userData$ | async"></bookcar>
         </mat-tab>
         <mat-tab label="My Books">
-          <mybookingscomponent></mybookingscomponent>
+          <mybookingscomponent
+            [userData]="userData$ | async"
+          ></mybookingscomponent>
         </mat-tab>
         <mat-tab label="Contacts">
           <contacts></contacts>

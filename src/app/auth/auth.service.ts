@@ -61,6 +61,7 @@ export class AuthService {
           email: email,
           username: username,
           userLevel: 20,
+          carsIds: [],
         })
         .then(() => {
           console.log('User data added to Firestore');

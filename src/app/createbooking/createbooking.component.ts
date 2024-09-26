@@ -7,6 +7,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
+import { AppUser, UserService } from '../UserService/user.service';
+import { Observable, take } from 'rxjs';
 
 @Component({
   selector: 'createbooking',
@@ -37,7 +39,7 @@ import { MatIconModule } from '@angular/material/icon';
               <mat-form-field appearance="outline">
                 <mat-select
                   id="model"
-                  [(ngModel)]="userCar.model"
+                  [(ngModel)]="createdCar.model"
                   name="model"
                   placeholder="Select car model"
                   required
@@ -56,7 +58,7 @@ import { MatIconModule } from '@angular/material/icon';
                   matInput
                   id="year"
                   type="number"
-                  [(ngModel)]="userCar.year"
+                  [(ngModel)]="createdCar.year"
                   name="year"
                   placeholder="Enter manufacturing year"
                   required
@@ -71,7 +73,7 @@ import { MatIconModule } from '@angular/material/icon';
                   matInput
                   id="color"
                   type="text"
-                  [(ngModel)]="userCar.color"
+                  [(ngModel)]="createdCar.color"
                   name="color"
                   placeholder="Enter car color"
                   required
@@ -86,7 +88,7 @@ import { MatIconModule } from '@angular/material/icon';
                   matInput
                   id="price"
                   type="number"
-                  [(ngModel)]="userCar.price"
+                  [(ngModel)]="createdCar.price"
                   name="price"
                   placeholder="Enter car price"
                   required
@@ -102,7 +104,8 @@ import { MatIconModule } from '@angular/material/icon';
   `,
 })
 export class CreateBookingComponent {
-  userCar: Car;
+  createdCar: Car;
+  userData$: Observable<AppUser>;
 
   carBrands: string[] = [
     'Toyota',
@@ -157,7 +160,7 @@ export class CreateBookingComponent {
   ];
 
   ngOnInit(): void {
-    this.userCar = {
+    this.createdCar = {
       id: '0',
       model: '',
       year: null,
@@ -166,14 +169,20 @@ export class CreateBookingComponent {
     };
   }
 
-  constructor(private firestore: AngularFirestore, private router: Router) {}
+  constructor(
+    private firestore: AngularFirestore,
+    private router: Router,
+    private userService: UserService
+  ) {
+    this.userData$ = this.userService.userData$;
+  }
 
   createCar(): void {
     if (
-      !this.userCar.model ||
-      !this.userCar.year ||
-      !this.userCar.color ||
-      !this.userCar.price
+      !this.createdCar.model ||
+      !this.createdCar.year ||
+      !this.createdCar.color ||
+      !this.createdCar.price
     ) {
       alert('Please fill all the fields');
       return;
@@ -183,15 +192,34 @@ export class CreateBookingComponent {
     const userRef = this.firestore.collection('cars').doc();
 
     // Set the unique ID to the userCar object
-    this.userCar.id = userRef.ref.id;
+    this.createdCar.id = userRef.ref.id;
 
     userRef.set({
-      id: this.userCar.id,
-      model: this.userCar.model,
-      year: this.userCar.year,
-      color: this.userCar.color,
-      price: this.userCar.price,
+      id: this.createdCar.id,
+      model: this.createdCar.model,
+      year: this.createdCar.year,
+      color: this.createdCar.color,
+      price: this.createdCar.price,
     });
+
+    this.userData$.pipe(take(1)).subscribe((user) => {
+      if (user) {
+        const userRef = this.firestore.collection('users').doc(user.email);
+        userRef
+          .update({
+            ...user,
+            carsIds: [...user.carsIds, this.createdCar.id],
+          })
+          .then(() => {
+            console.log('User data added to Firestore');
+          })
+          .catch((error) => {
+            console.error('Error adding user data to Firestore:', error);
+          });
+      }
+    });
+
+    this.router.navigate(['menu']);
   }
 
   navigateTo(section: string) {

@@ -13,16 +13,9 @@ import { CarCardComponent } from '../carcard/carcard.component';
   styleUrls: ['bookcar.style.scss'],
   template: `
     <div class="container">
-      <div
-        class="listCards"
-        (click)="selectCar(car)"
-        *ngFor="let car of cars$ | async"
-      >
-        <cardcard [car]="car"></cardcard>
+      <div class="listCards" *ngFor="let car of cars$ | async">
+        <cardcard [car]="car" [userData]="userData"></cardcard>
       </div>
-    </div>
-    <div class="footer">
-      <p>&copy; 2024 Car Booking Service. All rights reserved.</p>
     </div>
   `,
 })
@@ -38,23 +31,10 @@ export class BookCarComponent {
     this.cars$ = this.firestore.collection<Car>('cars').valueChanges();
   }
 
-  selectCar(car: Car): void {
-    // Toggle selection of the car
-    if (this.userData.userLevel >= 40) {
-      this.selectedCar = this.selectedCar === car ? null : car;
-    }
-  }
-
-  removeCar(car: Car): void {
-    // Implement the logic to remove the car from the database
-    this.firestore
-      .collection<Car>('cars')
-      .doc(car.id)
-      .delete()
-      .then(() => {
-        console.log(`${car.model} removed successfully`);
-        // Reset the selected car after removal
-        this.selectedCar = null;
-      });
-  }
+  // selectCar(car: Car): void {
+  //   // Toggle selection of the car
+  //   if (this.userData.userLevel >= 40) {
+  //     this.selectedCar = this.selectedCar === car ? null : car;
+  //   }
+  // }
 }
