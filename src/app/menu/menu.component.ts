@@ -26,24 +26,22 @@ import { AsyncPipe } from '@angular/common';
     MyBookingsComponent,
   ],
   template: `
-    <div class="container">
-      <mat-tab-group>
-        <mat-tab label="Home">
-          <home></home>
-        </mat-tab>
-        <mat-tab label="Book a Car">
-          <bookcar [userData]="userData$ | async"></bookcar>
-        </mat-tab>
-        <mat-tab label="Your Cars">
-          <mybookingscomponent
-            [userData]="userData$ | async"
-          ></mybookingscomponent>
-        </mat-tab>
-        <mat-tab label="Contacts">
-          <contacts></contacts>
-        </mat-tab>
-      </mat-tab-group>
-    </div>
+    <mat-tab-group id="tab-group" dynamicHeight="true">
+      <mat-tab label="Home">
+        <home></home>
+      </mat-tab>
+      <mat-tab label="Book a Car">
+        <bookcar [userData]="userData$ | async"></bookcar>
+      </mat-tab>
+      <mat-tab label="Your Cars">
+        <mybookingscomponent
+          [userData]="userData$ | async"
+        ></mybookingscomponent>
+      </mat-tab>
+      <mat-tab label="Contacts">
+        <contacts></contacts>
+      </mat-tab>
+    </mat-tab-group>
   `,
 })
 export class MenuComponent {

@@ -14,8 +14,10 @@ import { CarCardComponent } from '../carcard/carcard.component';
   template: `
     <div class="container">
       <h2>Book a Car</h2>
-      <div class="listCards" *ngFor="let car of cars$ | async">
-        <cardcard [car]="car" [userData]="userData"></cardcard>
+      <div class="cards-container">
+        <div class="listCards" *ngFor="let car of cars$ | async">
+          <cardcard [car]="car" [userData]="userData"></cardcard>
+        </div>
       </div>
     </div>
   `,

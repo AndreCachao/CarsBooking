@@ -3,9 +3,9 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  height: 100vh;
-  padding: 20px;
-  background: linear-gradient(135deg, #f3cf04, #000000);
+  height: 150vh;
+  background-image: url("../assets/images/menubackground.jpg");
+  // background: linear-gradient(135deg, #f3cf04, #000000);
   color: #333;
 }
 
@@ -34,9 +34,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   text-align: center;
   padding: 20px;
+  margin-top: 225px;
   color: white;
 }
 

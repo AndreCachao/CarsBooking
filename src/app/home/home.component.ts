@@ -33,10 +33,6 @@ import { AsyncPipe } from '@angular/common';
           </button>
         </div>
       </div>
-
-      <div class="footer">
-        <p>&copy; 2024 Car Booking Service. All rights reserved.</p>
-      </div>
     </div>
   `,
 })

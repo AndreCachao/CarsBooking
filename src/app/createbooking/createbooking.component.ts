@@ -19,7 +19,6 @@ import { Observable, take } from 'rxjs';
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    MatInputModule,
     CommonModule,
   ],
   styleUrls: ['createbooking.style.scss'],
@@ -52,6 +51,20 @@ import { Observable, take } from 'rxjs';
             </div>
 
             <div class="form-group">
+              <label for="price">License Plate</label>
+              <mat-form-field appearance="outline">
+                <input
+                  matInput
+                  id="price"
+                  [(ngModel)]="createdCar.licensePlate"
+                  name="price"
+                  placeholder="Enter license plate"
+                  required
+                />
+              </mat-form-field>
+            </div>
+
+            <div class="form-group">
               <label for="year">Year</label>
               <mat-form-field appearance="outline">
                 <mat-select
@@ -73,9 +86,9 @@ import { Observable, take } from 'rxjs';
               <mat-form-field appearance="outline">
                 <mat-select
                   id="price"
-                  [(ngModel)]="createdCar.price"
+                  [(ngModel)]="createdCar.color"
                   name="price"
-                  placeholder="Enter car price"
+                  placeholder="Enter car color"
                   required
                 >
                   <mat-option *ngFor="let color of carColors" [value]="color">{{
@@ -169,7 +182,7 @@ export class CreateBookingComponent {
     2000, 1999,
   ];
 
-  carColors = [
+  carColors: Color[] = [
     { name: 'Red', color: '#FF0000' },
     { name: 'Green', color: '#00FF00' },
     { name: 'Blue', color: '#0000FF' },
@@ -207,8 +220,10 @@ export class CreateBookingComponent {
       id: '0',
       model: '',
       year: null,
-      color: '',
+      color: { name: '', color: '' },
       price: null,
+      licensePlate: '',
+      owner: '',
     };
   }
 
@@ -225,28 +240,31 @@ export class CreateBookingComponent {
       !this.createdCar.model ||
       !this.createdCar.year ||
       !this.createdCar.color ||
-      !this.createdCar.price
+      !this.createdCar.price ||
+      !this.createdCar.licensePlate
     ) {
       alert('Please fill all the fields');
       return;
     }
 
     // Get a reference to a new document with an auto-generated ID
-    const userRef = this.firestore.collection('cars').doc();
 
     // Set the unique ID to the userCar object
-    this.createdCar.id = userRef.ref.id;
-
-    userRef.set({
-      id: this.createdCar.id,
-      model: this.createdCar.model,
-      year: this.createdCar.year,
-      color: this.createdCar.color,
-      price: this.createdCar.price,
-    });
 
     this.userData$.pipe(take(1)).subscribe((user) => {
       if (user) {
+        const carsRef = this.firestore.collection('cars').doc();
+        this.createdCar.id = carsRef.ref.id;
+        carsRef.set({
+          id: this.createdCar.id,
+          model: this.createdCar.model,
+          year: this.createdCar.year,
+          color: this.createdCar.color,
+          price: this.createdCar.price,
+          licensePlate: this.createdCar.licensePlate,
+          owner: user.email,
+        });
+
         const userRef = this.firestore.collection('users').doc(user.email);
         userRef
           .update({
@@ -270,10 +288,17 @@ export class CreateBookingComponent {
   }
 }
 
+export interface Color {
+  name: string;
+  color: string;
+}
+
 export interface Car {
   id: string;
   model: string;
   year: number;
-  color: string;
+  color: Color;
   price: number;
+  licensePlate: string;
+  owner: string;
 }

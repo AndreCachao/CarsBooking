@@ -1,6 +1,10 @@
 .container {
   display: flex;
-  background: linear-gradient(135deg, #f3cf04, #000000);
+  // background: linear-gradient(135deg, #f3cf04, #000000);
+  background-image: url("../assets/images/carbackground.jpg");
+  background-size: cover; /* cover, contain, or specific dimensions */
+  background-position: center; /* center, top, bottom, left, right */
+  background-repeat: no-repeat; /* or repeat */
   align-items: center;
   flex-direction: column;
   height: 100vh;
@@ -12,67 +16,18 @@
   flex-direction: column;
   height: 100vh;
 }
-
-.table-heading {
+.cards-container {
   display: flex;
-  width: 80%;
-  margin-top: 20px;
-  justify-content: space-between;
-  flex-direction: row;
-}
-
-.collumn {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  border: 3px solid black;
-}
-
-.values {
-  display: flex;
-  height: 40px;
-  width: 80%;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid gray;
-  border-right: 1px solid gray;
-  border-left: 1px solid gray;
-
-  &:hover {
-    background-color: rgb(157, 221, 221);
-    cursor: pointer;
-  }
-}
-
-.value {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-
-.footer {
-  width: 100%;
-  padding: 10px 0;
-  text-align: center;
-  border-top: 2px solid #000000;
-  font-size: 14px;
-  color: white;
-}
-
-.remove-button {
-  button {
-    background-color: red;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    border-radius: 3px;
-  }
+  max-height: 70vh; /* Set the max height of the container */
+  overflow-y: auto;
+  width: 80%;
 }
 
 .listCards {
   margin-top: 30px;
-  width: 80%;
+  width: 95%;
 }
 
 .cardcard {
