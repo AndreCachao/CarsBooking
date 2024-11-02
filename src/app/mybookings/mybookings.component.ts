@@ -30,7 +30,7 @@ import { CarCardComponent } from '../carcard/carcard.component';
     CommonModule,
   ],
   template: `
-    <div class="container">
+    <div class="component-container">
       <h2>Your Cars</h2>
       <div class="listCards" *ngFor="let car of cars">
         <cardcard [car]="car" [userData]="userData"></cardcard>

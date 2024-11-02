@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { AppUser, UserService } from '../UserService/user.service';
 import { Observable, take } from 'rxjs';
+import { start } from 'repl';
 
 @Component({
   selector: 'createbooking',
@@ -23,7 +24,7 @@ import { Observable, take } from 'rxjs';
   ],
   styleUrls: ['createbooking.style.scss'],
   template: `
-    <div class="container">
+    <div class="component-container">
       <div class="upper-container">
         <button (click)="navigateTo('menu')" class="home-button" mat-button>
           <mat-icon>arrow_back</mat-icon>
@@ -113,6 +114,16 @@ import { Observable, take } from 'rxjs';
               </mat-form-field>
             </div>
 
+            <div class="form-group">
+              <label for="carImage">Car Image</label>
+              <input
+                type="file"
+                id="carImage"
+                (change)="onFileSelected($event)"
+                accept="image/*"
+              />
+            </div>
+
             <button class="submit-button" type="submit">Create</button>
           </form>
         </div>
@@ -123,6 +134,7 @@ import { Observable, take } from 'rxjs';
 export class CreateBookingComponent {
   createdCar: Car;
   userData$: Observable<AppUser>;
+  selectedFile: File = null;
 
   carBrands: string[] = [
     'Toyota',
@@ -235,6 +247,13 @@ export class CreateBookingComponent {
     this.userData$ = this.userService.userData$;
   }
 
+  onFileSelected(event: any): void {
+    const file: File = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+    }
+  }
+
   createCar(): void {
     if (
       !this.createdCar.model ||
@@ -301,4 +320,15 @@ export interface Car {
   price: number;
   licensePlate: string;
   owner: string;
+  bookingsDates?: BookingDates[];
+}
+
+interface BookingDates {
+  startDate: Data;
+  endDate: Data;
+}
+
+interface Data {
+  seconds: number;
+  nanoseconds: number;
 }

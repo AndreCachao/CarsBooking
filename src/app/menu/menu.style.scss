@@ -1,12 +1,71 @@
+.tabs-container {
+  display: flex;
+  flex-direction: column;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
+  overflow: hidden;
+
+  .tabs-header {
+    display: flex;
+    justify-content: space-between;
+    background-color: #ffffff;
+    padding: 0;
+    border-bottom: 2px solid #e9ecef;
+
+    .tab-button {
+      flex: 1;
+      padding: 15px 20px;
+      text-align: center;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      font-size: 16px;
+      font-weight: bold;
+      color: #495057;
+      transition: all 0.3s ease;
+      position: relative;
+
+      &:hover {
+        color: #007bff;
+        background-color: #e9ecef;
+      }
+
+      &.active {
+        color: #ffffff;
+        background-color: #007bff;
+      }
+
+      // Add a fancy underline animation on hover
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 3px;
+        background-color: #007bff;
+        transition: width 0.3s ease, left 0.3s ease;
+      }
+
+      &:hover::after,
+      &.active::after {
+        width: 100%;
+        left: 0;
+      }
+    }
+  }
+
+  .tabs-content {
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 0 0 8px 8px;
+  }
+}
+
 mini-profile {
   width: 250px; /* You can adjust the width as needed */
   height: 100%;
   border-right: 1px solid #ccc; /* Optional: Adds a divider between the profile and the tabs */
-}
-
-mat-tab-group {
-  flex-grow: 1; /* Ensures the tab group takes up the remaining space */
-  height: 100%;
-  min-height: 500px;
-  background-color: rgb(245, 199, 100);
 }
