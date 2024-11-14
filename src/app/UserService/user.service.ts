@@ -58,12 +58,12 @@ export class UserService {
       });
   }
 
-  updateUserProfile(data: Partial<AppUser>): void {
-    const userId = this.getCurrentUserId();
-    if (userId) {
-      this.firestore.collection('users').doc(userId).update(data);
-    }
-  }
+  // updateUserProfile(data: Partial<AppUser>): void {
+  //   const userId = this.getCurrentUserId();
+  //   if (userId) {
+  //     this.firestore.collection('users').doc(userId).update(data);
+  //   }
+  // }
 }
 
 export interface AppUser {

@@ -57,13 +57,7 @@ import { Observable } from 'rxjs';
               alt="Profile Picture"
               class="w-full h-full rounded-full object-cover"
             />
-            <input
-              #fileInput
-              type="file"
-              accept="image/*"
-              hidden
-              (change)="onFileSelected($event)"
-            />
+            <input #fileInput type="file" accept="image/*" hidden />
           </div>
         </div>
         <div
@@ -117,23 +111,23 @@ export class ProfileComponent {
     });
   }
 
-  onFileSelected(event: Event): void {
-    const file = (event.target as HTMLInputElement).files?.[0];
-    if (file) {
-      const filePath = `profile_pictures/${file.name}_${Date.now()}`;
-      const fileRef = this.storage.ref(filePath);
+  // onFileSelected(event: Event): void {
+  //   const file = (event.target as HTMLInputElement).files?.[0];
+  //   if (file) {
+  //     const filePath = `profile_pictures/${file.name}_${Date.now()}`;
+  //     const fileRef = this.storage.ref(filePath);
 
-      // Upload image to Firebase Storage
-      this.storage.upload(filePath, file).then(() => {
-        fileRef.getDownloadURL().subscribe((url) => {
-          this.profileImageUrl = url; // Update image URL in the component
-          this.updateUserProfileImage(url); // Save URL to Firestore
-        });
-      });
-    }
-  }
+  //     // Upload image to Firebase Storage
+  //     this.storage.upload(filePath, file).then(() => {
+  //       fileRef.getDownloadURL().subscribe((url) => {
+  //         this.profileImageUrl = url; // Update image URL in the component
+  //         this.updateUserProfileImage(url); // Save URL to Firestore
+  //       });
+  //     });
+  //   }
+  // }
 
-  private updateUserProfileImage(url: string): void {
-    this.userService.updateUserProfile({ profileImageUrl: url });
-  }
+  // private updateUserProfileImage(url: string): void {
+  //   this.userService.updateUserProfile({ profileImageUrl: url });
+  // }
 }
