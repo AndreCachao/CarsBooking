@@ -12,14 +12,20 @@ import { CarCardComponent } from '../carcard/carcard.component';
   imports: [CommonModule, CarCardComponent],
   styleUrls: ['bookcar.style.scss'],
   template: `
-    <div class="flex flex-col min-h-screen items-center bg-amber-500">
+    <div
+      class="flex flex-col min-h-screen items-center bg-gradient-to-br from-amber-500 to-yellow-400"
+    >
       <div class="font-bold text-5xl mt-4">Book a Car</div>
       <div
-        class="flex flex-col overflow-y-auto items-center w-4/5 mt-8 bg-white rounded-lg shadow-lg"
+        class="flex flex-col overflow-y-auto items-center w-4/5 mt-8 bg-white rounded-3xl shadow-lg"
         style="height: 70vh"
       >
-        <div class="listCards" *ngFor="let car of cars$ | async">
-          <cardcard [car]="car" [userData]="userData"></cardcard>
+        <div class="mt-8 w-[95%]" *ngFor="let car of cars$ | async">
+          <cardcard
+            [car]="car"
+            [userData]="userData"
+            [booking]="true"
+          ></cardcard>
         </div>
       </div>
     </div>

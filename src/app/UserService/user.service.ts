@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable, of, switchMap } from 'rxjs';
-import { Car } from '../createbooking/createbooking.component';
+import { Car, Data } from '../createbooking/createbooking.component';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -58,10 +58,12 @@ export class UserService {
       });
   }
 
-
-  
-
-
+  updateUserProfile(data: Partial<AppUser>): void {
+    const userId = this.getCurrentUserId();
+    if (userId) {
+      this.firestore.collection('users').doc(userId).update(data);
+    }
+  }
 }
 
 export interface AppUser {
@@ -69,4 +71,11 @@ export interface AppUser {
   email: string;
   userLevel: number;
   carsIds: string[];
+  carsBooked: carBooked[];
+}
+
+interface carBooked {
+  id: string;
+  startDate: Data;
+  endDate: Data;
 }

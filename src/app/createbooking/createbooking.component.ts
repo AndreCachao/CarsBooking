@@ -9,7 +9,6 @@ import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { AppUser, UserService } from '../UserService/user.service';
 import { Observable, take } from 'rxjs';
-import { start } from 'repl';
 
 @Component({
   selector: 'createbooking',
@@ -24,107 +23,116 @@ import { start } from 'repl';
   ],
   styleUrls: ['createbooking.style.scss'],
   template: `
-    <div class="component-container">
-      <div class="upper-container">
-        <button (click)="navigateTo('menu')" class="home-button" mat-button>
-          <mat-icon>arrow_back</mat-icon>
-        </button>
+    <div class="flex flex-col min-h-screen bg-amber-500">
+      <div class="p-6">
+        <a
+          href="menu"
+          class="bg-neutral-900 hover:bg-stone-800 text-amber-500 font-semibold py-3 px-6 rounded-lg"
+          >Go Back</a
+        >
       </div>
-      <div class="bellow-container">
-        <div class="form-container">
-          <h2 class="form-title">Add a New Car</h2>
-          <form (ngSubmit)="createCar()" #carForm="ngForm">
-            <div class="form-group">
-              <label for="model">Model</label>
-              <mat-form-field appearance="outline">
-                <mat-select
-                  id="model"
-                  [(ngModel)]="createdCar.model"
-                  name="model"
-                  placeholder="Select car model"
-                  required
-                >
-                  <mat-option *ngFor="let brand of carBrands" [value]="brand">{{
-                    brand
-                  }}</mat-option>
-                </mat-select>
-              </mat-form-field>
+
+      <div class="flex items-center justify-center flex-1">
+        <div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
+          <h2 class="text-2xl font-semibold text-center mb-6">Add a New Car</h2>
+
+          <form (ngSubmit)="createCar()" #carForm="ngForm" class="space-y-6">
+            <div>
+              <label for="model" class="block font-medium text-gray-700 mb-1"
+                >Model</label
+              >
+              <select
+                [(ngModel)]="createdCar.model"
+                name="model"
+                required
+                class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500"
+              >
+                <option *ngFor="let brand of carBrands" [value]="brand">
+                  {{ brand }}
+                </option>
+              </select>
             </div>
 
-            <div class="form-group">
-              <label for="price">License Plate</label>
-              <mat-form-field appearance="outline">
-                <input
-                  matInput
-                  id="price"
-                  [(ngModel)]="createdCar.licensePlate"
-                  name="price"
-                  placeholder="Enter license plate"
-                  required
-                />
-              </mat-form-field>
-            </div>
-
-            <div class="form-group">
-              <label for="year">Year</label>
-              <mat-form-field appearance="outline">
-                <mat-select
-                  id="year"
-                  [(ngModel)]="createdCar.year"
-                  name="year"
-                  placeholder="Enter manufacturing year"
-                  required
-                >
-                  <mat-option *ngFor="let year of years" [value]="year">{{
-                    year
-                  }}</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-
-            <div class="form-group">
-              <label for="color">Color</label>
-              <mat-form-field appearance="outline">
-                <mat-select
-                  id="price"
-                  [(ngModel)]="createdCar.color"
-                  name="price"
-                  placeholder="Enter car color"
-                  required
-                >
-                  <mat-option *ngFor="let color of carColors" [value]="color">{{
-                    color.name
-                  }}</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-
-            <div class="form-group">
-              <label for="price">Price per day</label>
-              <mat-form-field appearance="outline">
-                <input
-                  matInput
-                  id="price"
-                  type="number"
-                  [(ngModel)]="createdCar.price"
-                  name="price"
-                  placeholder="Enter car price"
-                  required
-                />
-              </mat-form-field>
-            </div>
-
-            <div class="form-group">
-              <label for="carImage">Car Image</label>
+            <div>
+              <label
+                for="licensePlate"
+                class="block font-medium text-gray-700 mb-1"
+                >License Plate</label
+              >
               <input
-                type="file"
-                id="carImage"
-                (change)="onFileSelected($event)"
-                accept="image/*"
+                type="text"
+                [(ngModel)]="createdCar.licensePlate"
+                name="licensePlate"
+                required
+                class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500"
+                placeholder="Enter license plate"
               />
             </div>
 
-            <button class="submit-button" type="submit">Create</button>
+            <div>
+              <label for="year" class="block font-medium text-gray-700 mb-1"
+                >Year</label
+              >
+              <select
+                [(ngModel)]="createdCar.year"
+                name="year"
+                required
+                class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500"
+              >
+                <option *ngFor="let year of years" [value]="year">
+                  {{ year }}
+                </option>
+              </select>
+            </div>
+
+            <div>
+              <label for="color" class="block font-medium text-gray-700 mb-1"
+                >Color</label
+              >
+              <select
+                [(ngModel)]="createdCar.color.name"
+                name="color"
+                required
+                class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500"
+              >
+                <option *ngFor="let color of carColors" [value]="color.name">
+                  {{ color.name }}
+                </option>
+              </select>
+            </div>
+
+            <div>
+              <label for="price" class="block font-medium text-gray-700 mb-1"
+                >Price per day</label
+              >
+              <input
+                type="number"
+                [(ngModel)]="createdCar.price"
+                name="price"
+                required
+                class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500"
+                placeholder="Enter car price"
+              />
+            </div>
+
+            <div>
+              <label for="carImage" class="block font-medium text-gray-700 mb-1"
+                >Car Image</label
+              >
+              <input
+                type="file"
+                (change)="onFileSelected($event)"
+                accept="image/*"
+                class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500"
+              />
+            </div>
+
+            <button
+              type="submit"
+              class="w-full py-3 bg-neutral-900 hover:bg-stone-800 text-amber-500 font-semibold rounded-lg text-center cursor-pointer"
+            >
+              Add Car
+            </button>
           </form>
         </div>
       </div>
@@ -274,11 +282,16 @@ export class CreateBookingComponent {
       if (user) {
         const carsRef = this.firestore.collection('cars').doc();
         this.createdCar.id = carsRef.ref.id;
+        const selectedColorName = this.createdCar.color.name;
+        const selectedColor = this.carColors.find(
+          (color) => color.name === selectedColorName
+        );
+
         carsRef.set({
           id: this.createdCar.id,
           model: this.createdCar.model,
           year: this.createdCar.year,
-          color: this.createdCar.color,
+          color: selectedColor,
           price: this.createdCar.price,
           licensePlate: this.createdCar.licensePlate,
           owner: user.email,
@@ -323,12 +336,12 @@ export interface Car {
   bookingsDates?: BookingDates[];
 }
 
-interface BookingDates {
+export interface BookingDates {
   startDate: Data;
   endDate: Data;
 }
 
-interface Data {
+export interface Data {
   seconds: number;
   nanoseconds: number;
 }

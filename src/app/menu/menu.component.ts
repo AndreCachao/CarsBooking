@@ -5,7 +5,6 @@ import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { HomeComponent } from '../home/home.component';
 import { BookCarComponent } from '../bookcar/bookcar.component';
 import { CreateBookingComponent } from '../createbooking/createbooking.component';
-import { ContactsComponent } from '../contacts/contacts.component';
 import { MiniProfileComponent } from '../home/miniprofile.component';
 import { Observable } from 'rxjs';
 import {
@@ -17,6 +16,7 @@ import {
 } from '@angular/common';
 import { Auth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { HowToUseComponent } from '../contacts/howtouse.component';
 
 @Component({
   selector: 'app-menu',
@@ -28,7 +28,7 @@ import { Router } from '@angular/router';
     HomeComponent,
     BookCarComponent,
     CreateBookingComponent,
-    ContactsComponent,
+    HowToUseComponent,
     MiniProfileComponent,
     AsyncPipe,
     MyBookingsComponent,
@@ -88,7 +88,7 @@ import { Router } from '@angular/router';
             class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start"
           >
             <div class="flex flex-shrink-0 items-center">
-              <img src="CarLogoBar.jpg" />
+              <img [src]="imageSrc" width="50" height="50" />
             </div>
             <div class="hidden sm:ml-6 sm:block">
               <div class="flex space-x-4 cursor-pointer">
@@ -109,29 +109,6 @@ import { Router } from '@angular/router';
           <div
             class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
           >
-            <button
-              type="button"
-              class="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-            >
-              <span class="absolute -inset-1.5"></span>
-              <span class="sr-only">View notifications</span>
-              <svg
-                class="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                aria-hidden="true"
-                data-slot="icon"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0"
-                />
-              </svg>
-            </button>
-
             <!-- Profile dropdown -->
             <div class="relative ml-3" (click)="dropDown()">
               <div>
@@ -147,17 +124,6 @@ import { Router } from '@angular/router';
                   <img class="h-8 w-8 rounded-full" />
                 </button>
               </div>
-
-              <!--
-                                    Dropdown menu, show/hide based on menu state.
-
-                                    Entering: "transition ease-out duration-100"
-                                      From: "transform opacity-0 scale-95"
-                                      To: "transform opacity-100 scale-100"
-                                    Leaving: "transition ease-in duration-75"
-                                      From: "transform opacity-100 scale-100"
-                                      To: "transform opacity-0 scale-95"
-                                  -->
               <div
                 *ngIf="dropdownOpen"
                 class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
@@ -168,7 +134,7 @@ import { Router } from '@angular/router';
               >
                 <!-- Active: "bg-gray-100", Not Active: "" -->
                 <a
-                  href="#"
+                  href="profile"
                   class="block px-4 py-2 text-sm text-gray-700"
                   role="menuitem"
                   tabindex="-1"
@@ -176,15 +142,6 @@ import { Router } from '@angular/router';
                   >Your Profile</a
                 >
                 <a
-                  href="#"
-                  class="block px-4 py-2 text-sm text-gray-700"
-                  role="menuitem"
-                  tabindex="-1"
-                  id="user-menu-item-1"
-                  >Settings</a
-                >
-                <a
-                  href="#"
                   class="block px-4 py-2 text-sm text-gray-700"
                   role="menuitem"
                   tabindex="-1"
@@ -222,21 +179,24 @@ import { Router } from '@angular/router';
       <mybookingscomponent [userData]="userData$ | async"></mybookingscomponent>
     </div>
     <div *ngIf="selectedTab === 3">
-      <contacts></contacts>
+      <howtouse></howtouse>
     </div>
   `,
 })
 export class MenuComponent {
   tabs = [
-    { label: 'Home' },
-    { label: 'Book a Car' },
-    { label: 'Your Cars' },
-    { label: 'Contacts' },
+    { label: 'Dashboard' },
+    { label: 'Car Booking' },
+    { label: 'My Booked Cars' },
+    { label: 'Getting Started' },
   ];
 
   selectedTab = 0;
   dropdownOpen = false;
   userData$: Observable<AppUser>;
+
+  imageSrc = 'assets/images/CarLogoBar.png';
+  imageAlt = 'a';
 
   constructor(
     private userService: UserService,
@@ -251,7 +211,6 @@ export class MenuComponent {
   }
 
   dropDown(): void {
-    console.log(this.dropdownOpen);
     this.dropdownOpen = !this.dropdownOpen;
   }
 

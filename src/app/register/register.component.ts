@@ -56,16 +56,7 @@ import { Router } from '@angular/router';
             />
           </div>
 
-          <!-- <div class="input-group">
-            <label for="confirmPassword">Confirm Password</label>
-            <input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              [(ngModel)]="confirmPassword"
-              required
-            />
-          </div> -->
+
 
           <button type="submit" class="register-button">Register</button>
 

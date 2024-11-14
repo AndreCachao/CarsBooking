@@ -1,16 +1,12 @@
-import { start } from 'repl';
 import { UserService } from './../UserService/user.service';
 import { Component, Input, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Car } from '../createbooking/createbooking.component';
+import { Car, Data } from '../createbooking/createbooking.component';
 import '@angular/compiler';
 import { AppUser } from '../UserService/user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDialogBookCarComponent } from './mat-dialog-book-car/mat-dialog-book-car.component';
-import {
-  MatCalendar,
-  MatCalendarCellClassFunction,
-} from '@angular/material/datepicker';
+import { MatCalendar } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -34,56 +30,95 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
   template: `
     <div
       *ngIf="!cardOpen"
-      class="flex justify-center items-center h-24 w-full p-2 transition-all duration-300 ease-in-out hover:h-28"
+      class="flex justify-center items-center h-28 w-full p-4 transition-all duration-300 ease-in-out hover:h-32"
     >
       <div
         (click)="cardClick()"
-        class="flex items-center items-center p-5 w-full h-full border-2 border-gray-300 rounded-lg bg-white shadow-lg cursor-pointer transform hover:translate-y-[-5px] hover:border-amber-500"
+        class="flex items-center p-5 w-full h-full border border-gray-200 rounded-lg bg-gradient-to-r from-white via-gray-50 to-gray-100 shadow-md cursor-pointer transform hover:scale-105 hover:shadow-lg hover:border-amber-400 transition-transform duration-200"
       >
-        <div class="flex-1 text-4xl font-bold text-amber-500">
+        <div class="flex-1 text-2xl font-semibold text-amber-600">
           {{ car.model }}
         </div>
-        <div class="flex-1">Year: {{ car.year }}</div>
-        <div class="flex-1">Color: {{ car.color.name }}</div>
-        <div class="flex-1">Price per day: {{ car.price }}€</div>
+        <div class="flex-1 text-gray-600">Year: {{ car.year }}</div>
+        <div class="flex-1 text-gray-600">Color: {{ car.color.name }}</div>
+        <div class="flex-1 text-gray-600">Price per day: {{ car.price }}€</div>
+        <div *ngIf="!booking" class="flex-1 text-sm text-gray-500">
+          <div
+            class="flex-1 font-black text-lg"
+            *ngFor="let date of car.bookingsDates"
+          >
+            {{ transformData(date.startDate) }} |
+            {{ transformData(date.endDate) }}
+          </div>
+        </div>
       </div>
     </div>
 
     <div
       *ngIf="cardOpen"
-      class="flex justify-center items-center h-[35vh] w-full p-5 transition-all duration-300 ease-in-out"
+      class="flex justify-center items-center h-[40vh] w-full p-6 transition-all duration-300 ease-in-out"
     >
       <div
-        class="flex flex-col items-center p-5 w-full h-full border-2 border-amber-500 rounded-lg bg-white shadow-lg"
+        class="flex flex-col items-center p-6 w-full h-full border border-amber-400 rounded-xl bg-white shadow-xl"
       >
         <div
-          class="flex items-center justify-between w-full mb-4 pb-3 border-b border-gray-300 text-gray-800 cursor-pointer"
+          class="flex items-center justify-between w-full mb-4 pb-4 border-b border-gray-200 text-gray-700 cursor-pointer"
           (click)="cardClick()"
         >
-          <div class="flex-1 text-4xl font-bold text-amber-500">
+          <div class="flex-1 text-2xl font-semibold text-amber-600">
             {{ car.model }}
           </div>
-          <div class="flex-1">Year: {{ car.year }}</div>
-          <div class="flex-1">Color: {{ car.color.name }}</div>
-          <div class="flex-1">Price per day: {{ car.price }}€</div>
+          <div class="flex-1 text-gray-600">Year: {{ car.year }}</div>
+          <div class="flex-1 text-gray-600">Color: {{ car.color.name }}</div>
+          <div class="flex-1 text-gray-600">
+            Price per day: {{ car.price }}€
+          </div>
+          <div *ngIf="!booking" class="flex-1 text-sm text-gray-500">
+            <div
+              class="flex-1 font-black text-lg"
+              *ngFor="let date of car.bookingsDates"
+            >
+              {{ transformData(date.startDate) }} |
+              {{ transformData(date.endDate) }}
+            </div>
+          </div>
         </div>
 
-        <div class="flex w-full h-full">
+        <div class="flex w-full h-full space-x-6">
           <div class="flex flex-col justify-center items-center flex-1">
-            <div>License Plate: {{ car.licensePlate }}</div>
-            <div>Owner: {{ car.owner }}</div>
+            <div class="text-gray-700 font-medium">
+              License Plate: {{ car.licensePlate }}
+            </div>
+            <div class="text-gray-700 font-medium">Owner: {{ car.owner }}</div>
             <button
               *ngIf="car.owner === userData.email"
-              class="bg-red-500 text-white py-2 px-5 rounded-full mt-5 hover:bg-red-600 transform hover:scale-105"
+              class="bg-red-500 text-white py-2 px-6 rounded-full mt-5 hover:bg-red-600 transform hover:scale-105 transition-transform duration-200"
               (click)="userService.deleteCar(car, userData)"
             >
               Remove
             </button>
           </div>
 
-          <div class="calendar">
-            <div>
-              <mat-form-field appearance="fill">
+          <div
+            *ngIf="!booking"
+            class="flex flex-col flex-1 text-sm text-gray-500 items-center"
+          >
+            <div class="text-gray-700 font-medium">My Booked Dates:</div>
+            <div
+              class="flex-1 font-black text-lg"
+              *ngFor="let date of car.bookingsDates"
+            >
+              {{ transformData(date.startDate) }} |
+              {{ transformData(date.endDate) }}
+            </div>
+          </div>
+
+          <div
+            *ngIf="booking && car.owner !== userData.email"
+            class="calendar items-center w-full"
+          >
+            <div class="flex flex-col items-center w-9/12 space-y-4">
+              <mat-form-field appearance="fill" class="w-7/12">
                 <mat-label>Select Date Range for Booking</mat-label>
                 <mat-date-range-input
                   [formGroup]="bookingForm"
@@ -108,16 +143,13 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
                 ></mat-datepicker-toggle>
                 <mat-date-range-picker #picker></mat-date-range-picker>
               </mat-form-field>
-              <div class="flex justify-center items-center flex-1">
-                <div>
-                  <button
-                    class="bg-neutral-900 hover:bg-stone-800 text-amber-500 font-semibold py-3 px-6 rounded-lg"
-                    (click)="onSubmit()"
-                  >
-                    Book In
-                  </button>
-                </div>
-              </div>
+
+              <button
+                class="bg-neutral-800 hover:bg-gray-700 text-amber-500 font-semibold py-3 px-8 rounded-lg transition-transform duration-200 transform hover:scale-105"
+                (click)="onSubmit()"
+              >
+                Book In
+              </button>
             </div>
           </div>
         </div>
@@ -128,6 +160,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 export class CarCardComponent {
   @Input() car: Car;
   @Input() userData: AppUser;
+  @Input() booking: boolean;
   cardOpen: boolean = false;
   cardDisabledDates: Date[];
   yesterday = new Date();
@@ -140,7 +173,7 @@ export class CarCardComponent {
     public dialog: MatDialog,
     private firestore: AngularFirestore
   ) {
-    // Initialize the booking form group
+    // Initialize Calendar Form
     this.bookingForm = this.fb.group(
       {
         start: [null, Validators.required],
@@ -169,17 +202,19 @@ export class CarCardComponent {
         // Iterate from startDate to endDate
         while (currentDate <= endDate) {
           // Push the date as a string to temp array
-          tempDisabledDates.push(new Date(currentDate)); // Use new Date to avoid reference issues
+          tempDisabledDates.push(new Date(currentDate));
           currentDate.setDate(currentDate.getDate() + 1);
         }
 
         // Append the temporary disabled dates to the main array
         this.cardDisabledDates.push(...tempDisabledDates);
       });
-
-      // Optional: To debug or check populated dates
-      console.log(this.cardDisabledDates);
     }
+  }
+
+  transformData(date: { seconds: number }): string {
+    const formattedDate = new Date(date.seconds * 1000);
+    return formattedDate.toISOString().split('T')[0]; // Returns "YYYY-MM-DD"
   }
 
   dateFilter = (date: Date | null): boolean => {
@@ -203,6 +238,9 @@ export class CarCardComponent {
       const endDate: Date = this.bookingForm.value.end;
 
       const carRef = this.firestore.collection('cars').doc(this.car.id);
+      const userRef = this.firestore
+        .collection('users')
+        .doc(this.userData.email);
 
       if (this.car.bookingsDates) {
         carRef.update({
@@ -217,6 +255,37 @@ export class CarCardComponent {
           ...this.car,
           bookingsDates: [{ startDate: startDate, endDate: endDate }],
         });
+      }
+
+      if (this.userData.carsBooked) {
+        userRef
+          .update({
+            ...this.userData,
+            carsBooked: [
+              ...this.userData.carsBooked,
+              { id: this.car.id, startDate: startDate, endDate: endDate },
+            ],
+          })
+          .then(() => {
+            console.log('User data added to Firestore');
+          })
+          .catch((error) => {
+            console.error('Error adding user data to Firestore:', error);
+          });
+      } else {
+        userRef
+          .update({
+            ...this.userData,
+            carsBooked: [
+              { id: this.car.id, startDate: startDate, endDate: endDate },
+            ],
+          })
+          .then(() => {
+            console.log('User data added to Firestore');
+          })
+          .catch((error) => {
+            console.error('Error adding user data to Firestore:', error);
+          });
       }
     }
   }
